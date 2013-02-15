@@ -38,21 +38,21 @@ html,body {
     text-indent:102px;
     padding:9px 5px 10px;
     margin:0 0 6px 0;
-    color:#BBB;
+    color:#DDD;
     position:relative;
 
     background:
     -moz-linear-gradient(
     top,
-    #4E4E4E 0%,
-    #2C2C2C);
+    #555 0%,
+    #403C3B);
     background:
     -webkit-gradient(
     linear, left top, left bottom, 
-    from(#4E4E4E),
-    to(#2C2C2C));
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#4E4E4E', endColorstr='#2C2C2C'); /* IE6 & IE7 */
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#4E4E4E', endColorstr='#2C2C2C')"; /* IE8 */
+    from(#555),
+    to(#403C3B));
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#555555', endColorstr='#403C3B') !important; /* IE6 & IE7 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#555555', endColorstr='#403C3B')" !important; /* IE8 */
     zoom: 1;
 
     -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.7);
@@ -98,7 +98,14 @@ html,body {
 
 
 .ninjatools_admin .updated{
+    background:#e6ff81;
     display: none; 
+    margin:5px 12px 12px;
+    padding:2px 8px;
+    border:none;
+    border-radius: 0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
 }
 
 
@@ -111,7 +118,7 @@ html,body {
     position:absolute;
     background:#403C3B;
     left:246px;
-    top:98px;
+    top:101px;
     z-index: 9999;
 }
 .ninjatools_admin .login p {
@@ -146,6 +153,9 @@ html,body {
     line-height: 1;
     padding: 3px 8px;
     background:#F0F0F0;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
 }
 
 .ninjatools_admin .login .form .nt_inputps input{
@@ -154,6 +164,9 @@ html,body {
     line-height: 1;
     padding: 3px 8px;
     background:#F0F0F0;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
 }
 
 .ninjatools_admin .login .form .submit{
@@ -224,7 +237,7 @@ html,body {
 
 .layout{
     border: 1px solid #C7C7C7;
-    width: 450px;
+    width: 501px;
     padding: 0;
     margin:27px 0 10px 30px;
     float: left;
@@ -246,14 +259,8 @@ html,body {
 
 }
 
-.ninjatools_admin  .disabled{
-
-}
-
-
-
-.ninjatools_admin .main{
-    width: 199px;
+.ninjatools_admin .article{
+    width: 250px;
     float: left;
     margin: 0;
     height: 260px;
@@ -272,10 +279,13 @@ html,body {
     height: 80px;
 }
 
-.dragging {
+.dragging.analyze {
     background: #FFF url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/nt_wpp_tool03.png) no-repeat center center;
 }
 
+.dragging.omatome {
+    background: #FFF url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/nt_wpp_tool03.png) no-repeat center center;
+}
 
 .ninjatools_admin .drophover {
     background: #F9FFE4 url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/nt_wpp_tool03.png) no-repeat center center;
@@ -293,7 +303,6 @@ html,body {
     float: left;
     width :210px;
     color:#555;
-    background-color: white;
     margin: 2px;
     border: 1px solid #555;
 
@@ -301,6 +310,18 @@ html,body {
     -moz-box-shadow:    0px 0px 1px rgba(0, 0, 0, 1);
     box-shadow:         0px 0px 1px rgba(0, 0, 0, 1);
 }
+
+#tools div.item.analyze{
+    background:url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_analyze.png) no-repeat 3px 4px #FFF;
+    text-indent:20px;
+}
+
+
+#tools div.item.omatome{
+    background:url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_omatome.png) no-repeat 3px 4px #FFF;
+    text-indent:20px;
+}
+
 
 #tools div.title_div{
     float: left;
@@ -314,26 +335,99 @@ html,body {
     float: left;
     width :30px;
     height: 26px;
-    background: #FFF url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/nt_wpp_tool01.png) no-repeat right center ;
     margin: 0;
     padding: 0;
     cursor: move;
+}
+
+#tools div.handle_div.analyze{
+    background: #FFF url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/nt_wpp_tool01.png) no-repeat right center ;
+}
+
+#tools div.handle_div.omatome{
+    background: #FFF url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/nt_wpp_tool01.png) no-repeat right center ;
 }
 
 #tools div.clear{
     clear: both;
 }
 
-#tools .subti_na{
-    font-size:11px;
-    font-weight:bold;
-    padding:4px 0 5px ;
-    margin:0;
-    line-height:1;
-    background:url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/pu_ico.png) no-repeat 0 0;
-    text-indent:19px;
+#tools .group h3:hover{
+    cursor: move;
 }
 
+#tools .group .subti_na_oma{
+    font-size:11px;
+    font-weight:bold;
+    line-height:1;
+    text-indent:44px;
+       cursor: pointer;
+    
+       margin:2px -20px 3px;
+       border-top:1px solid #666;
+       padding:14px 0 5px;
+       width:265px;
+       clear:both;
+    
+                background: url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_omatome.png) no-repeat 20px 10px;
+       background:
+                url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_omatome.png) no-repeat 20px 10px,
+    -moz-linear-gradient(
+    top,
+    #555 0%,
+    #403C3B);
+    background:
+                url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_omatome.png) no-repeat 20px 10px,
+    -webkit-gradient(
+    linear, left top, left bottom, 
+    from(#555),
+    to(#403C3B));
+}
+
+#tools .group .subti_na_ana{
+    font-size:11px;
+    font-weight:bold;
+    line-height:1;
+    text-indent:44px;
+       cursor: pointer;
+                
+    margin:2px -20px 3px;
+       border-top:1px solid #666;
+       padding:14px 0 5px;
+       width:265px;
+       clear:both;
+    
+                background:url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_analyze.png) no-repeat 20px 10px ;
+       background:
+                url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_analyze.png) no-repeat 20px 10px,
+    -moz-linear-gradient(
+    top,
+    #555 0%,
+    #403C3B);
+    background:
+                url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_analyze.png) no-repeat 20px 10px,
+    -webkit-gradient(
+    linear, left top, left bottom, 
+    from(#555),
+    to(#403C3B));
+}
+
+
+.group{
+}
+
+.last_line{
+       clear:both;
+    margin:0 -20px 0;
+                padding:6px 0 0;
+                border-bottom:1px solid #666;
+       width:265px;
+                height:0;
+}
+
+.nomal{
+    font-weight:normal;
+}
 
 .ninjatools_admin .layout .outline div.item{
     float: left;
@@ -350,10 +444,18 @@ html,body {
 
 }
 
+
+.ninjatools_admin .layout .outline .article .dropped{
+    position: relative;
+    left: 15px;
+    top: 5px;  
+}
+
+
 .ninjatools_admin .layout .outline .sidebar .dropped{
     position: relative;
     left: 15px;
-    top: 90px;  
+    top: 5px;  
 }
 
 
@@ -369,6 +471,15 @@ html,body {
     color:#555;
     overflow: hidden;
     padding:5px 5px 4px 5px;
+}
+
+.ninjatools_admin .layout .outline div.title_div.analyze{
+    background:url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_analyze.png) no-repeat 3px 4px #FFF;
+    text-indent:20px;
+}
+.ninjatools_admin .layout .outline div.title_div.omatome{
+    background:url(<?php echo NINJATOOLS_PLUGIN_URL; ?>/images/ico_omatome.png) no-repeat 3px 4px #FFF;
+    text-indent:20px;
 }
 
 .ninjatools_admin .layout .outline div.close_div{
@@ -413,4 +524,3 @@ html,body {
     border-top-style: solid;
     font-size:10px;
 }
-

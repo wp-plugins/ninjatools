@@ -50,7 +50,17 @@
             </div>
 
             <div id="tools">
-                <h4 class="subti_na"><?php _e("Ninja Analyze Tool List", NINJATOOLS_DOMAIN); ?></h4>
+                <h3 class="subti_na_oma">
+                <span><?php _e("Ninja Omatome", NINJATOOLS_DOMAIN); ?></span><span class="nomal"><?php _e("Tool List", NINJATOOLS_DOMAIN); ?></span>
+                </h3>
+                <div class="omatome"></div>
+                <div class="last_line"></div>
+
+                <h3 class="subti_na_ana">
+                <span><?php _e("Ninja Analyze", NINJATOOLS_DOMAIN); ?></span><span class="nomal"><?php _e("Tool List", NINJATOOLS_DOMAIN); ?></span>
+                </h3>
+                <div class="analyze"></div>
+                <div class="last_line"></div>
             </div>
 
             <div class="clear"></div>
@@ -66,7 +76,7 @@
             <div class="header disabled">
                 <div class="title"><?php _e("Header", NINJATOOLS_DOMAIN); ?></div>
             </div>
-            <div class="main disabled">
+            <div class="article ui-droppable" data-place="article">
                 <div class="title"><?php _e("Article", NINJATOOLS_DOMAIN); ?></div>
             </div>
             <div class="sidebar ui-droppable" data-place="sidebar">
@@ -81,4 +91,3 @@
     </div>
 </div>
 <!-- /ninjatools_admin -->
-

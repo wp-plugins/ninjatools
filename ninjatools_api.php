@@ -20,6 +20,8 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 class NinjaTools_API {
     const LOGIN_URL = 'https://www.ninja.co.jp/auth/client';
     const API_URL = 'https://www.ninja.co.jp/api/';
+    const ONETAG_API_URL = 'https://omatome.shinobi.jp/api/';
+
     const SERVICE = 'xapi';
     const SIG_ALGO_SHA256 = 'sha256';
     const SIG_ALGO_SHA512 = 'sha512';
@@ -27,6 +29,10 @@ class NinjaTools_API {
 
     const ANALYSIS_SIG_KEY = 'analysis';
     const ANALYSIS_SIG_ALGO = self::SIG_ALGO_SHA256_HEX;
+
+    const OMATOME_SIG_KEY = 'omatome';
+    const OMATOME_SIG_ALGO = self::SIG_ALGO_SHA256_HEX;
+
 
     private $_publicKey = null;
     private $_sigAlgo = null;
@@ -76,6 +82,97 @@ class NinjaTools_API {
         return $retval;
     }
 
+    function getOnetagScript($id_str) {
+        list($tool_id, $tag_id) = explode("-", $id_str);
+        $params = array();
+        $params['public_key'] = (string)$this->getPublicKey();
+        $params['tid'] = $tool_id;
+        $params['tag_id'] = $tag_id;
+        $data = http_build_query($params, "", "&");
+        $header = array(
+            "Content-Type: application/x-www-form-urlencoded",
+            "Content-Length: ".strlen($data)
+        );
+        $context = array(
+            "http" => array(
+                "method"  => "POST",
+                "header"  => implode("\r\n", $header),
+                "content" => $data
+            )
+        );
+        $ret = @file_get_contents(self::ONETAG_API_URL . "get-onetag-scripts", false, stream_context_create($context));
+        $body = json_decode($ret);
+        if (isset($body->result) && $body->result == true && !empty($body->tag)) {
+            return $body->tag;
+        } else {
+            return false;
+        }
+ 
+    }
+
+
+
+    function getOnetagButtonLists($tool_id) {
+        $params = array();
+        $params['public_key'] = (string)$this->getPublicKey();
+        $params['tid'] = $tool_id;
+        $data = http_build_query($params, "", "&");
+        $header = array(
+            "Content-Type: application/x-www-form-urlencoded",
+            "Content-Length: ".strlen($data)
+        );
+        $context = array(
+            "http" => array(
+                "method"  => "POST",
+                "header"  => implode("\r\n", $header),
+                "content" => $data
+            )
+        );
+        $ret = @file_get_contents(self::ONETAG_API_URL . "get-onetag-lists", false, stream_context_create($context));
+        $body = json_decode($ret);
+        
+        $omatome_list = array();
+        foreach ($body->list as $v) {
+            $omatome_list["{$tool_id}-{$v->id}"] = $v->name;
+        }
+        return $omatome_list;
+    }
+
+    function getOnetagLists() {
+        $this->setSigKey(self::OMATOME_SIG_KEY);
+        $this->setSigAlgo(self::OMATOME_SIG_ALGO);
+
+        $params = array();
+        $params['publickey'] = (string)$this->getPublicKey();
+        $params['method'] = 'getLists';
+        $params['version'] = '1.0.0';
+        $params['timestamp'] = time();
+        $params['options'] = array('omatome');
+        ksort($params);
+        $params['signature'] = $this->createSignature($params);
+
+        $data = http_build_query($params, "", "&");
+        $header = array(
+            "Content-Type: application/x-www-form-urlencoded",
+            "Content-Length: ".strlen($data)
+        );
+        $context = array(
+            "http" => array(
+                "method"  => "POST",
+                "header"  => implode("\r\n", $header),
+                "content" => $data
+            )
+        );
+        $ret = @file_get_contents(self::API_URL."service", false, stream_context_create($context));
+        $body = json_decode($ret);
+        if (isset($body->result) && !empty($body->result)) {
+            return $body->result;
+        } else {
+            return false;
+        }
+ 
+    }
+
     function getAnalysisLists() {
         $this->setSigKey(self::ANALYSIS_SIG_KEY);
         $this->setSigAlgo(self::ANALYSIS_SIG_ALGO);
@@ -85,6 +182,7 @@ class NinjaTools_API {
         $params['method'] = 'getLists';
         $params['version'] = '1.0.0';
         $params['timestamp'] = time();
+        $params['options'] = array('analysis');
         ksort($params);
         $params['signature'] = $this->createSignature($params);
         $data = http_build_query($params, "", "&");
@@ -99,7 +197,7 @@ class NinjaTools_API {
                 "content" => $data
             )
         );
-        $ret = @file_get_contents(self::API_URL . "analysis", false, stream_context_create($context));
+        $ret = @file_get_contents(self::API_URL."service", false, stream_context_create($context));
         $body = json_decode($ret);
         if (isset($body->result) && !empty($body->result)) {
             return $body->result;

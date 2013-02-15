@@ -5,7 +5,7 @@ Plugin URI: http://www.ninja.co.jp/
 Description: Ninja Tools wordpress plugin
 Author: Kenichi Kashiwagi
 Author URI: http://www.ninja.co.jp/
-Version: 1.0.0
+Version: 1.1.0
 */
 
 /*
@@ -38,20 +38,25 @@ require_once NINJATOOLS_PLUGIN_DIR.'/ninjatools_widget.php';
 
 //add_action('wp_head', 'ninjatools_wp_head_action');
 add_action('wp_footer', 'ninjatools_wp_footer_action');
-//add_filter('the_content', 'ninjatools_the_content_filter');
+add_filter('the_content', 'ninjatools_the_content_filter');
 add_action('admin_menu', 'ninjatools_admin_menu_action');
 add_action('wp_ajax_ninjatools_admin_ajax_handler', 'ninjatools_admin_ajax_handler');
 add_action('widgets_init', create_function('', 'return register_widget("NinjaToolsWidget");'));
 
 
-function ninjatools_options() {
+function ninjatools_options($load_default = false) {
     $default_options = array(
         "public_key" => NULL,
         "services" => array(
-            "analyze" => NULL
+            "analyze" => NULL,
+            "omatome" => NULL,
         )
     );
-    $options = get_option(NINJATOOLS_OPTIONS, $default_options);
+    if ($load_default === true) {
+        $options = $default_options;
+    } else {
+        $options = get_option(NINJATOOLS_OPTIONS, $default_options);
+    }
     return $options;
 }
 
@@ -74,16 +79,14 @@ function ninjatools_extract_tag($place) {
     return $output_tag;
 }
 
-/*
 function ninjatools_wp_head_action() {
-    if ( ($tag = ninjatools_extract_tag("wp_head")) === "" ) {
+    if ( ($tag = ninjatools_extract_tag("header")) === "" ) {
         return;
     }
     echo "<!-- ninjatools_wp_head -->\n";
     echo $tag."\n";
     echo "<!-- /ninjatools_wp_head -->\n";
 }
-*/
 
 function ninjatools_wp_footer_action() {
     if ( ($tag = ninjatools_extract_tag("footer")) === "" ) {
@@ -96,7 +99,6 @@ function ninjatools_wp_footer_action() {
     echo "<!-- /ninjatools_wp_footer -->\n";
 }
 
-/*
 function ninjatools_the_content_filter( $content ) {
     if( is_feed() || is_404() || is_robots() || is_comments_popup() ){
        return $content;
@@ -112,16 +114,20 @@ function ninjatools_the_content_filter( $content ) {
             continue;
         }
 
-        if ($service["place"] !== "the_content" ) {
+        if ($service["place"] !== "article" ) {
             continue;
         }
-
+        /*
         if ( $service["position"] === "top" ) {
             $top_output_tag .= $service["tag"] . "\n";
         } else if ($service["position"] === "bottom") {
             $bottom_output_tag .= $service["tag"] . "\n";
         }
+        */
+        $bottom_output_tag .= $service["tag"] . "\n";
     }
+    $bottom_output_tag = str_replace('&lt;?php the_permalink(); ?&gt;', get_permalink(), $bottom_output_tag);
+    $bottom_output_tag = str_replace('&lt;?php the_title(); ?&gt;', get_the_title(), $bottom_output_tag);
 
     return <<<_EOF_
 
@@ -133,4 +139,3 @@ function ninjatools_the_content_filter( $content ) {
 
 _EOF_;
 }
-*/

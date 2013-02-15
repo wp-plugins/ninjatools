@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ninjatools.wordpress.plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-24 09:56+0900\n"
-"PO-Revision-Date: 2013-01-25 16:44+0900\n"
+"POT-Creation-Date: 2013-02-14 11:33+0900\n"
+"PO-Revision-Date: 2013-02-14 11:33+0900\n"
 "Last-Translator: Kenichi Kashiwagi <pod@ninja.co.jp>\n"
 "Language-Team:  <github-analyze@ml.ninja.co.jp>\n"
 "Language: \n"
@@ -33,45 +33,62 @@ msgstr "パスワード"
 msgid "Send"
 msgstr "送信"
 
-#: ninjatools_admin.html.php:53
-#: ninjatools_admin.js.php:100
-msgid "Ninja Analyze Tool List"
-msgstr "忍者アナライズツールリスト"
+#: ninjatools_admin.html.php:54
+#: ninjatools_admin.js.php:110
+msgid "Ninja Analyze"
+msgstr "忍者アナライズ"
 
-#: ninjatools_admin.html.php:67
+#: ninjatools_admin.html.php:54
+#: ninjatools_admin.html.php:58
+#: ninjatools_admin.js.php:111
+#: ninjatools_admin.js.php:118
+msgid "Tool List"
+msgstr "ツールリスト"
+
+#: ninjatools_admin.html.php:58
+#: ninjatools_admin.js.php:117
+msgid "Ninja Omatome"
+msgstr "忍者おまとめボタン"
+
+#: ninjatools_admin.html.php:74
 msgid "Header"
 msgstr "ヘッダ"
 
-#: ninjatools_admin.html.php:70
+#: ninjatools_admin.html.php:77
 msgid "Article"
 msgstr "記事"
 
-#: ninjatools_admin.html.php:73
+#: ninjatools_admin.html.php:80
 msgid "Sidebar"
 msgstr "サイドバー"
 
-#: ninjatools_admin.html.php:78
+#: ninjatools_admin.html.php:85
 msgid "Footer"
 msgstr "フッタ"
 
-#: ninjatools_admin.js.php:97
+#: ninjatools_admin.php:23
+#: ninjatools_admin.php:24
+msgid "Ninja Tools"
+msgstr "忍者ツールズ"
+
+#: ninjatools_admin.js.php:106
 msgid "No available tools. Please create tool after sign in Ninja Tools, or use another Ninja Tools account."
 msgstr "利用できるツールがありません。忍者ツールズにログインしてツールを作成するか、別の忍者ツールズIDでログインしてください。"
 
-#: ninjatools_admin.js.php:138
-#: ninjatools_admin.js.php:173
+#: ninjatools_admin.js.php:194
+#: ninjatools_admin.js.php:229
 msgid "Invalid infomation."
 msgstr "入力された値が不正です"
 
-#: ninjatools_admin.js.php:180
+#: ninjatools_admin.js.php:236
 msgid "Logged in successfully."
 msgstr "ログインに成功しました"
 
-#: ninjatools_admin.js.php:228
+#: ninjatools_admin.js.php:283
 msgid "Click login button below, and Input ID&Password for Ninja Tools"
 msgstr "以下のログインボタンをクリックして忍者ツールズIDとPWを入力してください"
 
-#: ninjatools_widget.php:33
+#: ninjatools_widget.php:32
 msgid "Title"
 msgstr "タイトル"
 

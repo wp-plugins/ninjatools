@@ -20,23 +20,21 @@ require_once NINJATOOLS_PLUGIN_DIR.'/ninjatools_api.php';
 
 function ninjatools_admin_menu_action() {
     $page = add_options_page(
-        'Ninja Tools', 
-        'Ninja Tools', 
+        __('Ninja Tools', NINJATOOLS_DOMAIN), 
+        __('Ninja Tools', NINJATOOLS_DOMAIN), 
         'manage_options', 
         __FILE__, 
         'ninjatools_admin_options_page'
     );
-    //add_action("admin_print_styles-{$page}", "ninjatools_admin_styles");
     add_action("admin_print_scripts-{$page}", "ninjatools_admin_scripts");
 
-}
-function ninjatools_admin_styles(){
-    //wp_enqueue_style('ninjatools_admin_styles', NINJATOOLS_PLUGIN_URL."/ninjatools_admin.css");
 }
 
 function ninjatools_admin_scripts(){
     wp_enqueue_script('jquery');
     wp_enqueue_script('jquery-ui-core');
+    wp_enqueue_script('jquery-ui-sortable');
+    wp_enqueue_script('jquery-ui-accordion');
     wp_enqueue_script('jquery-ui-draggable');
     wp_enqueue_script('jquery-ui-droppable');
 
@@ -52,12 +50,10 @@ function check_widget_activation(){
     $show_widget = 0;
     global $wp_registered_sidebars, $wp_registered_widgets;
     $sidebars_widgets = wp_get_sidebars_widgets();
-    //var_export($wp_registered_widgets);
 
     foreach ($wp_registered_sidebars as $name => $value) {
         foreach ($sidebars_widgets[$name] as $id => $widget ) {
             if (preg_match('/ninjatoolswidget/i', $widget)) {
-                //echo $widget;
                 $show_widget = 1;
             }
         }
@@ -111,15 +107,6 @@ function ninjatools_admin_options_page() {
     }
 
     require_once(NINJATOOLS_PLUGIN_DIR."/ninjatools_admin.html.php");
-
-
-    //echo "<pre>";
-    //$a = wp_get_sidebars_widgets();
-    //var_export($a);
-    //var_export($wp_registered_sidebars);
-    //global $wp_registered_widgets;
-    //var_export($wp_registered_widgets);
-    //echo "</pre>";
     
     echo activate_widget();
 
@@ -142,9 +129,8 @@ function ninjatools_admin_ajax_handler(){
             $result["result"] = true;
             $public_key = $api->getPublicKey();
             $result["public_key"] = $public_key;
-            $result["tool_list"] = $api->getAnalysisLists();
 
-            $options = ninjatools_options();
+            $options = ninjatools_options(true);
             $options['public_key'] = $public_key;
             $options = ninjatools_save_options($options);
         }else{
@@ -156,7 +142,16 @@ function ninjatools_admin_ajax_handler(){
         $api = new NinjaTools_API();
         $options = ninjatools_options();
         $api->setPublicKey($options['public_key']);
-        $result["tool_list"] = $api->getAnalysisLists();
+        
+        $ret = $api->getOnetagLists();
+        $omatome_key = 0;
+        foreach ($ret as $k=>$v) {
+            $omatome_key = $k;
+        }
+        $result["tool_list"] = array(
+            'analyze' => $api->getAnalysisLists(),
+            'omatome'  => $api->getOnetagButtonLists($omatome_key),
+        );
         $result["options"] = $options;
         $result["result"] = true;
         echo json_encode($result);
@@ -166,14 +161,20 @@ function ninjatools_admin_ajax_handler(){
         $options = ninjatools_options();
         $result = array();
 
+        $service = $query['service'];
+
         $api->setPublicKey($query['public_key']);
-        $ret = $api->getAnalysisScript($query['toolid']);
-        $result["_raw"] = var_export($ret, true);
+        if ($service == "analyze") {
+            $ret = $api->getAnalysisScript($query['toolid']);
+        }else if ($service == "omatome") {
+            $ret = $api->getOnetagScript($query['toolid']);
+        }
+
         if ($ret === false) {
             $result["result"] = false;
         }else{
             $result["result"] = true;
-            $options['services']['analyze'] = array(
+            $options['services'][$service] = array(
                 'toolid' => $query['toolid'],
                 'toolname'   => $query['toolname'],
                 'tag'     => $ret,
@@ -187,8 +188,10 @@ function ninjatools_admin_ajax_handler(){
     case "delTool":
         $options = ninjatools_options();
         $result = array();
+        $service = $query['service'];
         if (isset($query['deactivate']) && $query['deactivate'] === "true") {
-            $options['services']['analyze'] = NULL;
+            $options['services'][$service] = NULL;
+            $options['services']["omatome"] = NULL;
             $options = ninjatools_save_options($options);
         }
         
