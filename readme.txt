@@ -29,6 +29,9 @@ This plugin inserts HTML code of "Ninja Tools" for analyzing visitors, or settin
 
 == Changelog ==
 
+= 1.2.0 =
+* reset version
+
 = 1.1.1 =
 * Added check array/object number
 
