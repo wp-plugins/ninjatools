@@ -130,11 +130,16 @@ class NinjaTools_API {
         );
         $ret = @file_get_contents(self::ONETAG_API_URL . "get-onetag-lists", false, stream_context_create($context));
         $body = json_decode($ret);
-        
+
         $omatome_list = array();
-        foreach ($body->list as $v) {
-            $omatome_list["{$tool_id}-{$v->id}"] = $v->name;
+        if (isset($body->list) && is_array($body->list) && count($body->list) > 0) {
+            foreach ($body->list as $v) {
+                $omatome_list["{$tool_id}-{$v->id}"] = $v->name;
+            }
         }
+        if (count($omatome_list) === 0 ) {
+			return new StdClass();
+		}
         return $omatome_list;
     }
 

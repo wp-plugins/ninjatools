@@ -145,8 +145,10 @@ function ninjatools_admin_ajax_handler(){
         
         $ret = $api->getOnetagLists();
         $omatome_key = 0;
-        foreach ($ret as $k=>$v) {
-            $omatome_key = $k;
+        if (is_array($ret) && count($ret) > 0 ) {
+            foreach ($ret as $k=>$v) {
+                $omatome_key = $k;
+            }
         }
         $result["tool_list"] = array(
             'analyze' => $api->getAnalysisLists(),
