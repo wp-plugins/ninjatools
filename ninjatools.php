@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NinjaTools 
-Plugin URI: http://www.ninja.co.jp/
+Plugin URI: http://wordpress.org/plugins/ninjatools/
 Description: Ninja Tools wordpress plugin
 Author: Kenichi Kashiwagi
 Author URI: http://www.ninja.co.jp/
