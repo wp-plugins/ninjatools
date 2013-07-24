@@ -3,8 +3,8 @@ Contributors: ninjatools
 Donate link:
 Tags: widget, sidebar, footer, ninjatools
 Requires at least: 3.5
-Tested up to: 3.5.1
-Stable tag: 1.2.1
+Tested up to: 3.5.2
+Stable tag: 1.2.3
 
 This plugin inserts HTML code of "Ninja Tools" for analyzing visitors, or setting up social buttons in your blog without complex procedure.
 
@@ -28,6 +28,12 @@ This plugin inserts HTML code of "Ninja Tools" for analyzing visitors, or settin
 3. Setup is completed. The Ninja Tools widget works.
 
 == Changelog ==
+
+= 1.2.3 =
+* removed warning messages
+
+= 1.2.2 =
+* fix cannot show omatome button lists
 
 = 1.2.1 =
 * reset version
