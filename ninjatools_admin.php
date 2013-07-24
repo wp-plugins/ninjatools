@@ -145,7 +145,7 @@ function ninjatools_admin_ajax_handler(){
         
         $ret = $api->getOnetagLists();
         $omatome_key = 0;
-        if ($ret !== null) {
+        if ($ret !== null && $ret !== false) {
             foreach ($ret as $k=>$v) {
                 $omatome_key = $k;
             }
