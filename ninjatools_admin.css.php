@@ -28,6 +28,10 @@ html,body {
     min-height: 100%;
 }
 
+.ntwpp_tools_block h3 {
+    color: #fff !important;
+}
+
 .ninjatools_admin_title h2{
     padding:12px 0 2px 20px;
 }
