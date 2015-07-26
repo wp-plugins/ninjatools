@@ -71,6 +71,9 @@ This plugin inserts HTML code of "Ninja Tools" for analyzing visitors, or settin
 
 == Upgrade Notice ==
 
+= 1.2.4 =
+* change connection `file_get_contents` -> `curl`
+
 = 1.2.2 =
 * fix cannot show omatome button lists
 
