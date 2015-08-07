@@ -3,7 +3,7 @@ Contributors: ninjatools
 Donate link:
 Tags: widget, sidebar, footer, ninjatools, analysis, analytics, social, social media, twitter, facebook, google
 Requires at least: 3.5
-Tested up to: 4.2.3
+Tested up to: 4.2.4
 Stable tag: 1.2.4
 
 This plugin inserts HTML code of "Ninja Tools" for analyzing visitors, or setting up social buttons in your blog without complex procedure.
